@@ -1,51 +1,46 @@
+#ifndef MARKS_HPP_INCLUDED
+#define MARKS_HPP_INCLUDED
+
 #include <regex>
 
-namespace app {
+namespace bbplus {
 
 struct mark {
+    mark(std::string n, std::string i, std::string r) {
+        name = n;
+        input_regex = std::regex(i, std::regex::icase);
+        replace_pattern = r;
+    }
     std::string name;
     std::regex input_regex;
     std::string replace_pattern;
 };
 
-const int16_t MARKS_NB = 4;
+const int_fast8_t MARKS_NB = 4;
 
-auto get_marks() {
-    mark marks[MARKS_NB];
-
-    marks[0] = mark {
-        .name = "bold",
-        .input_regex = std::regex(
-            "\\[b\\](.*?)\\[\\/b\\]", std::regex::icase
-        ),
-        .replace_pattern = "<strong class=\"bb-bold\">$1</strong>"
-    };
-
-    marks[1] = mark {
-        .name = "italic",
-        .input_regex = std::regex(
-            "\\[i\\](.*?)\\[\\/i\\]", std::regex::icase
-        ),
-        .replace_pattern = "<em class=\"bb-italic\">$1</em>"
-    };
-
-    marks[2] = mark {
-        .name = "link",
-        .input_regex = std::regex(
-            "\\[url\\]([^\\s+|\"]*?)\\[\\/url\\]", std::regex::icase
-        ),
-        .replace_pattern = "<a href=\"\\$1\" class=\"bb-link\">$1</a>"
-    };
-
-    marks[3] = mark {
-        .name = "labelled_link",
-        .input_regex = std::regex(
-            "\\[url=\\\"([^\\s+|\"]*?)\\\"\\](.*?)\\[\\/url\\]", std::regex::icase
-        ),
-        .replace_pattern = "<a href=\"$1\" class=\"bb-labelled-link\">$2</a>"
-    };
-
-    return marks;
-}
+const mark MARKS[MARKS_NB] = {
+    mark(
+        "bold",
+        "\\[b\\](.*?)\\[\\/b\\]",
+        "<strong class=\"bb bb-bold\">$1</strong>"
+    ),
+    mark(
+        "italic",
+        "\\[i\\](.*?)\\[\\/i\\]",
+        "<em class=\"bb bb-italic\">$1</em>"
+    ),
+    mark(
+        "link",
+        "\\[url\\]([^\\s+|\"]*?)\\[\\/url\\]",
+        "<a href=\"\\$1\" class=\"bb bb-link\">$1</a>"
+    ),
+    mark(
+        "labelled_link",
+        "\\[url=\\\"([^\\s+|\"]*?)\\\"\\](.*?)\\[\\/url\\]",
+        "<a href=\"$1\" class=\"bb bb-labelled-link\">$2</a>"
+    )
+};
 
 }
+
+#endif
