@@ -32,7 +32,7 @@ const mark MARKS[MARKS_NB] = {
     mark(
         "link",
         "\\[url\\]([^\\s+|\"]*?)\\[\\/url\\]",
-        "<a href=\"\\$1\" class=\"bb bb-link\">$1</a>"
+        "<a href=\"$1\" class=\"bb bb-link\">$1</a>"
     ),
     mark(
         "labelled_link",
